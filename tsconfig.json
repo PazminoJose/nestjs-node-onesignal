@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "removeComments": false,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "useUnknownInCatchVariables": false,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "sourceMap": false,
+    "outDir": "./dist",
+    "rootDir": "./lib",
+    "skipLibCheck": true
+  },
+  "include": [
+    "lib/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "test"
+  ]
+}
