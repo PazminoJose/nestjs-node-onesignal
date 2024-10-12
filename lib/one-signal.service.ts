@@ -30,4 +30,8 @@ export class OneSignalService {
   public getNotifications(limit?: number, offset?: number): Promise<NotificationSlice> {
     return this.oneSignalClient.getNotifications(this.options.appId, limit, offset);
   }
+
+  public cancelNotification(notificationID: string, options: Configuration) {
+    return this.oneSignalClient.cancelNotification(this.options.appId, notificationID, options)
+  }
 }
