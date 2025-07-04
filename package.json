@@ -1,6 +1,6 @@
 {
   "name": "nestjs-node-onesignal",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "NestJS wrapper for OneSignal official package: @onesignal/node-onesignal",
   "author": "José Pazmiño <pepe.paz0399@gmail.com>",
   "license": "MIT",
