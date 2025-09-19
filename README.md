@@ -1,6 +1,6 @@
 # NestJS wrapper for OneSignal official package: @onesignal/node-onesignal
 >[!warning]
-This package is based on @onesignal/node-onesignal which is currently in alpha state so it may come with breaking changes in the future, use with caution.
+This package is based on @onesignal/node-onesignal which is currently in beta state so it may come with changes in the future, use with caution.
 
 ## Installation
 
