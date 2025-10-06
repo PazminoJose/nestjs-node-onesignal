@@ -1,5 +1,43 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { App, Configuration, CreateNotificationSuccessResponse, CreateSegmentSuccessResponse, DefaultApi, ExportEventsSuccessResponse, ExportSubscriptionsRequestBody, ExportSubscriptionsSuccessResponse, GenericSuccessBoolResponse, GetNotificationHistoryRequestBody, GetSegmentsSuccessResponse, Notification, NotificationHistorySuccessResponse, NotificationSlice, NotificationWithMeta, OutcomesData, PropertiesBody, Segment, SubscriptionBody, TransferSubscriptionRequestBody, UpdateLiveActivityRequest, UpdateLiveActivitySuccessResponse, UpdateUserRequest, User, UserIdentityBody } from "@onesignal/node-onesignal";
+import { 
+  ApiKeyTokensListResponse,
+  App, 
+  Configuration, 
+  CopyTemplateRequest, 
+  CreateApiKeyRequest, 
+  CreateApiKeyResponse, 
+  CreateNotificationSuccessResponse, 
+  CreateSegmentSuccessResponse, 
+  CreateTemplateRequest, 
+  CustomEventsRequest, 
+  DefaultApi, 
+  ExportEventsSuccessResponse, 
+  ExportSubscriptionsRequestBody, 
+  ExportSubscriptionsSuccessResponse, 
+  GenericSuccessBoolResponse, 
+  GetNotificationHistoryRequestBody, 
+  GetSegmentsSuccessResponse, 
+  Notification, 
+  NotificationHistorySuccessResponse, 
+  NotificationSlice, 
+  NotificationWithMeta, 
+  OutcomesData, 
+  PropertiesBody, 
+  Segment, 
+  StartLiveActivityRequest, 
+  StartLiveActivitySuccessResponse, 
+  SubscriptionBody, 
+  TemplateResource, 
+  TemplatesListResponse, 
+  TransferSubscriptionRequestBody, 
+  UpdateApiKeyRequest, 
+  UpdateLiveActivityRequest, 
+  UpdateLiveActivitySuccessResponse, 
+  UpdateTemplateRequest, 
+  UpdateUserRequest, 
+  User, 
+  UserIdentityBody 
+} from "@onesignal/node-onesignal";
 import { NotificationBuilder } from "./builders";
 import { createOneSignalConfiguration } from "./config";
 import { ONE_SIGNAL_CONFIG_OPTIONS } from "./constants";
@@ -27,16 +65,28 @@ export class OneSignalService {
     return this.oneSignalClient.cancelNotification(this.options.appId, notificationID, options)
   }
 
-  public createAlias(aliasLabel: string, aliasId: string, userIdentityBody: any, options?: Configuration): Promise<UserIdentityBody> {
+  public copyTemplateToApp(templateId: string, appId: string, copyTemplateRequest: CopyTemplateRequest, options?: Configuration): Promise<TemplateResource> {
+    return this.oneSignalClient.copyTemplateToApp(templateId, appId, copyTemplateRequest, options)
+  }
+
+  public createAlias(aliasLabel: string, aliasId: string, userIdentityBody: UserIdentityBody, options?: Configuration): Promise<UserIdentityBody> {
     return this.oneSignalClient.createAlias(this.options.appId, aliasLabel, aliasId, userIdentityBody, options)
   }
 
-  public createAliasBySubscription(subscriptionId: string, userIdentityBody: any, options?: Configuration): Promise<UserIdentityBody> {
+  public createAliasBySubscription(subscriptionId: string, userIdentityBody: UserIdentityBody, options?: Configuration): Promise<UserIdentityBody> {
     return this.oneSignalClient.createAliasBySubscription(this.options.appId, subscriptionId, userIdentityBody, options)
+  }
+
+  public createApiKey(createApiKeyRequest: CreateApiKeyRequest, options?: Configuration): Promise<CreateApiKeyResponse> {
+    return this.oneSignalClient.createApiKey(this.options.appId, createApiKeyRequest, options)
   }
 
   public createApp(app: App, options?: Configuration): Promise<App> {
     return this.oneSignalClient.createApp(app, options)
+  }
+
+  public createCustomEvents(customEventsRequest: CustomEventsRequest, options?: Configuration): Promise<object> {
+    return this.oneSignalClient.createCustomEvents(this.options.appId, customEventsRequest, options)
   }
 
   public createNotification(notification: Notification, options?: Configuration): Promise<CreateNotificationSuccessResponse> {
@@ -51,12 +101,20 @@ export class OneSignalService {
     return this.oneSignalClient.createSubscription(this.options.appId, aliasLabel, aliasId, subscriptionBody, options)
   }
 
+  public createTemplate(createTemplateRequest: CreateTemplateRequest, options?: Configuration): Promise<TemplateResource> {
+    return this.oneSignalClient.createTemplate(createTemplateRequest, options)
+  }
+
   public createUser(user: User, options?: Configuration): Promise<User> {
     return this.oneSignalClient.createUser(this.options.appId, user, options)
   }
 
   public deleteAlias(aliasLabel: string, aliasId: string, aliasLabelToDelete: string, options?: Configuration): Promise<UserIdentityBody> {
     return this.oneSignalClient.deleteAlias(this.options.appId, aliasLabel, aliasId, aliasLabelToDelete, options)
+  }
+
+  public deleteApiKey(tokenId: string, options?: Configuration): Promise<object> {
+    return this.oneSignalClient.deleteApiKey(this.options.appId, tokenId, options)
   }
 
   public deleteSegment(segmentId: string, options?: Configuration): Promise<GenericSuccessBoolResponse> {
@@ -67,6 +125,10 @@ export class OneSignalService {
     return this.oneSignalClient.deleteSubscription(this.options.appId, subscriptionId, options)
   }
 
+  public deleteTemplate(templateId: string, options?: Configuration): Promise<GenericSuccessBoolResponse> {
+    return this.oneSignalClient.deleteTemplate(templateId, this.options.appId, options)
+  }
+  
   public deleteUser(aliasLabel: string, aliasId: string, options?: Configuration): Promise<void> {
     return this.oneSignalClient.deleteUser(this.options.appId, aliasLabel, aliasId, options)
   }
@@ -119,12 +181,24 @@ export class OneSignalService {
     return this.oneSignalClient.getUser(this.options.appId, aliasLabel, aliasId, options)
   }
 
+  public rotateApiKey(tokenId: string, options?: Configuration): Promise<CreateApiKeyResponse> {
+    return this.oneSignalClient.rotateApiKey(this.options.appId, tokenId, options)
+  }
+
+  public startLiveActivity(activityType: string, startLiveActivityRequest: StartLiveActivityRequest, options?: Configuration): Promise<StartLiveActivitySuccessResponse> {
+    return this.oneSignalClient.startLiveActivity(this.options.appId, activityType, startLiveActivityRequest, options)
+  }
+
   public transferSubscription(subscriptionId: string, transferSubscriptionRequestBody: TransferSubscriptionRequestBody, options?: Configuration): Promise<UserIdentityBody> {
     return this.oneSignalClient.transferSubscription(this.options.appId, subscriptionId, transferSubscriptionRequestBody, options)
   }
 
   public unsubscribeEmailWithToken(notificationId: string, token: string, options?: Configuration): Promise<GenericSuccessBoolResponse> {
     return this.oneSignalClient.unsubscribeEmailWithToken(this.options.appId, notificationId, token, options)
+  }
+
+  public updateApiKey(tokenId: string, updateApiKeyRequest: UpdateApiKeyRequest, options?: Configuration): Promise<object> {
+    return this.oneSignalClient.updateApiKey(this.options.appId, tokenId, updateApiKeyRequest, options)
   }
 
   public updateApp(app: App, options?: Configuration): Promise<App> {
@@ -139,7 +213,27 @@ export class OneSignalService {
     return this.oneSignalClient.updateSubscription(this.options.appId, subscriptionId, subscriptionBody, options)
   }
 
+  public updateSubscriptionByToken(tokenType: string, token: string, subscriptionBody: SubscriptionBody, options?: Configuration): Promise<object> {
+    return this.oneSignalClient.updateSubscriptionByToken(this.options.appId, tokenType, token, subscriptionBody, options)
+  }
+
+  public updateTemplate(templateId: string, updateTemplateRequest: UpdateTemplateRequest, options?: Configuration): Promise<TemplateResource> {
+    return this.oneSignalClient.updateTemplate(templateId, this.options.appId, updateTemplateRequest, options)
+  }
+
   public updateUser(aliasLabel: string, aliasId: string, updateUserRequest: UpdateUserRequest, options?: Configuration): Promise<PropertiesBody> {
     return this.oneSignalClient.updateUser(this.options.appId, aliasLabel, aliasId, updateUserRequest, options)
+  }
+
+  public viewApiKeys(options?: Configuration): Promise<ApiKeyTokensListResponse> {
+    return this.oneSignalClient.viewApiKeys(this.options.appId, options)
+  }
+
+  public viewTemplate(templateId: string, options?: Configuration): Promise<TemplateResource> {
+    return this.oneSignalClient.viewTemplate(templateId, this.options.appId, options)
+  }
+
+  public viewTemplates(limit?: number, offset?: number, channel?: 'push' | 'email' | 'sms', options?: Configuration): Promise<TemplatesListResponse> {
+    return this.oneSignalClient.viewTemplates(this.options.appId, limit, offset, channel, options)
   }
 }
