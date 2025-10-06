@@ -544,6 +544,26 @@ export class NotificationBuilder {
     return this;
   }
 
+  setIdempotencyKey(idempotencyKey: string) {
+    this.notification.idempotency_key = idempotencyKey;
+    return this;
+  }
+
+  setIosRelevanceScore(iosRelevanceScore: number) {
+    this.notification.ios_relevance_score = iosRelevanceScore;
+    return this;
+  }
+
+  setIosInterruptionLevel(iosInterruptionLevel: string) {
+    this.notification.ios_interruption_level = iosInterruptionLevel;
+    return this;
+  }
+
+  setDisableEmailClickTracking(disableEmailClickTracking: boolean) {
+    this.notification.disable_email_click_tracking = disableEmailClickTracking;
+    return this;
+  }
+
   build() {
     return this.notification;
   }
